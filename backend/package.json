@@ -1,0 +1,38 @@
+{
+  "name": "backend-server",
+  "private": true,
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "dependencies": {
+    "sails": "0.10.5",
+    "sails-disk": "0.10.5",
+    "include-all": "0.1.6",
+    "jsonwebtoken": "1.1.2",
+    "lodash": "2.4.1",
+    "chokidar": "0.12.3"
+  },
+  "devDependencies": {
+    "supertest": "0.13.0",
+    "mocha": "1.21.4",
+    "should": "4.0.4",
+    "chai": "1.9.1"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "debug": "node debug app.js",
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "main": "app.js",
+  "repository": {},
+  "bugs": {},
+  "author": "Protacon Solutions",
+  "license": "MIT",
+  "contributors": [{
+    "name": "Tarmo Leppänen",
+    "email": "tarmo.leppanen@protacon.com"
+  }]
+}

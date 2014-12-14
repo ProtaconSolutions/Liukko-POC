@@ -1,0 +1,30 @@
+{
+    "name": "liukko-poc",
+    "version": "1.0.0",
+    "description": "Small POC for Liukko",
+    "keywords": [
+        "POC",
+        "Protacon",
+        "Protacon Solutions"
+    ],
+    "main": "",
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {
+        "install": "cd backend && npm install && cd ../frontend && npm install",
+        "test": "cd backend && mocha"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ProtaconSolutions/Liukko-POC.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ProtaconSolutions/Liukko-POC/issues"
+    },
+    "author": "Protacon Solutions",
+    "license": "MIT",
+    "contributors": [{
+        "name": "Tarmo Leppänen",
+        "email": "tarmo.leppanen@protacon.com"
+    }]
+}

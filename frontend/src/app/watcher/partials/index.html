@@ -25,3 +25,28 @@
         Make changes to that file and see what happen in browser
     </li>
 </ol>
+
+<div class="row">
+    <div class="col-sm-2"
+        data-ng-repeat="file in files"
+        data-ng-init="file.watcherActive = false; file.data = {}"
+    >
+        <h4>{{file.name}}</h4>
+        <h5>{{file.path}}</h5>
+
+        <pre class="file-content" pretty-json="file.data"></pre>
+
+        <button class="btn btn-primary"
+            data-ng-disabled="file.watcherActive"
+            data-ng-click="watcherStart(file)"
+        >
+            Start watcher
+        </button>
+        <button class="btn btn-warning"
+            data-ng-disabled="!file.watcherActive"
+            data-ng-click="watcherStop(file)"
+        >
+            Stop watcher
+        </button>
+    </div>
+</div>

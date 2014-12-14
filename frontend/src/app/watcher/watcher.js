@@ -20,7 +20,21 @@
                             views: {
                                 'content@': {
                                     templateUrl: '/liukko-poc/watcher/partials/index.html',
-                                    controller: 'WatcherController'
+                                    controller: 'WatcherController',
+                                    resolve: {
+                                        _files: [
+                                            '$sailsSocket', 'BackendConfig',
+                                            function resolve($sailsSocket, BackendConfig) {
+                                                return $sailsSocket
+                                                    .get(BackendConfig.url + '/watcher/files')
+                                                    .then(
+                                                        function onSuccess(result) {
+                                                            return result.data;
+                                                        }
+                                                    );
+                                            }
+                                        ]
+                                    }
                                 }
                             }
                         })

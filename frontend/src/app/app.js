@@ -6,6 +6,7 @@
     angular.module('liukko-poc', [
         'angular-loading-bar',
         'ngStorage',
+        'ngPrettyJson',
         'ui.router',
         'toastr',
         'sails.io',
@@ -55,7 +56,10 @@
 
                     // Yeah we wanna to use HTML5 urls!
                     $locationProvider
-                        .html5Mode(true)
+                        .html5Mode({
+                            enabled: true,
+                            requireBase: false
+                        })
                         .hashPrefix('!')
                     ;
 

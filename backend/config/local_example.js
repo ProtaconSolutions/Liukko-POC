@@ -24,8 +24,29 @@
  * http://links.sailsjs.org/docs/config/local
  */
 module.exports = {
-    session: {
-        secret: '' // Add your own SECRET string here
+    watcherHook: {
+        files: [
+            {
+                path: 'file_01.txt',
+                name: 'File watcher 1',
+                room: 'watcher_01'
+            },
+            {
+                path: 'file_02.txt',
+                name: 'File watcher 2',
+                room: 'watcher_02'
+            },
+            {
+                path: 'file_03.txt',
+                name: 'File watcher 3',
+                room: 'watcher_03'
+            },
+            {
+                path: 'file_04.txt',
+                name: 'File watcher 4',
+                room: 'watcher_04'
+            }
+        ]
     },
     port: 1337,
     environment: 'development',

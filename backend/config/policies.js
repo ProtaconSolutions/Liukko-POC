@@ -19,10 +19,15 @@
  */
 module.exports.policies = {
     // Default policy for all controllers and actions
-    '*':    ['authenticated'],
+    '*':    ['Authenticated'],
 
     // Auth controller
     AuthController: {
         '*': true
+    },
+
+    // Watcher controller
+    WatcherController: {
+        '*': ['Authenticated', 'IsSocket']
     }
 };

@@ -1,55 +1,75 @@
-<h3>Simple file watcher</h3>
+<div class="row">
+    <div class="col-sm-6">
+        <h3>Simple file watcher</h3>
 
-<p>
-    This will demonstrate how to get web socket messages from backend whenever some file(s) have been changed.
-</p>
+        <p>
+            This will demonstrate how to get web socket messages from backend whenever some file(s) have been changed.
+            Note that you can specify which files are allowed to be watched via this application. These are configured
+            in your <code>config/local.js</code> file in backend side.
+        </p>
 
-<h3>Instructions</h3>
-
-<ol>
-    <li>
-        First of all, open your browser console to see that everything is working. You should see following information
-        there
+        <h4>Todo list</h4>
         <ul>
-            <li><em>`io.socket` connected successfully.</em></li>
-            <li><em>You have been subscribed successfully! </em></li>
+            <li>
+                Move these file configurations to database so that those can be easily modified via sails.js blueprints.
+            </li>
         </ul>
-    </li>
-    <li>
-        Start watcher for some of the files
-    </li>
-    <li>
-        Open new shell / terminal window, and open some of those watcher files with your favorite text editor
-        <ul>
-            <li>Files are located in backend/data/ directory</li>
-        </ul>
-    </li>
-    <li>
-        Make changes to that file and see what happen in browser
-    </li>
-</ol>
+    </div>
+    <div class="col-sm-6">
+        <h3>Instructions</h3>
+
+        <ol>
+            <li>
+                First of all, open your browser console to see that everything is working. You should see following information
+                there
+                <ul>
+                    <li><em>`io.socket` connected successfully.</em></li>
+                    <li><em>You have been subscribed successfully! </em></li>
+                </ul>
+            </li>
+            <li>
+                Start watcher for files you want to
+            </li>
+            <li>
+                Open new shell / terminal window, and open some of those watcher files with your favorite text editor
+                and make some changes to that file and see what happen in browser
+            </li>
+            <li>
+                Or open content update dialog and make changes via GUI. Note that this is not allowed for all of the
+                files.
+            </li>
+        </ol>
+
+    </div>
+</div>
 
 <div class="row">
-    <div class="col-sm-2"
+    <div class="col-sm-3"
         data-ng-repeat="file in files"
-        data-ng-init="file.watcherActive = false; file.data = {}"
     >
         <h4>{{file.name}}</h4>
         <h5>{{file.path}}</h5>
 
         <pre class="file-content" pretty-json="file.data"></pre>
 
-        <button class="btn btn-primary"
-            data-ng-disabled="file.watcherActive"
-            data-ng-click="watcherStart(file)"
-        >
-            Start watcher
-        </button>
-        <button class="btn btn-warning"
-            data-ng-disabled="!file.watcherActive"
-            data-ng-click="watcherStop(file)"
-        >
-            Stop watcher
-        </button>
+        <div class="btn-group">
+            <button class="btn btn-primary"
+                data-ng-disabled="file.watcherActive"
+                data-ng-click="watcherStart(file)"
+            >
+                Start watcher
+            </button>
+            <button class="btn btn-danger"
+                data-ng-disabled="!file.watcherActive"
+                data-ng-click="watcherStop(file)"
+            >
+                Stop watcher
+            </button>
+            <button class="btn btn-success"
+                data-ng-click="updateFileContent(file)"
+            >
+                Update content
+            </button>
+        </div>
     </div>
 </div>

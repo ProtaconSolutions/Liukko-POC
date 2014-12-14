@@ -15,28 +15,7 @@ module.exports = function watcherHook(sails) {
              */
             return {
                 watcherHook: {
-                    files: [
-                        {
-                            path: 'file_01.txt',
-                            name: 'File watcher 1',
-                            room: 'watcher_01'
-                        },
-                        {
-                            path: 'file_02.txt',
-                            name: 'File watcher 2',
-                            room: 'watcher_02'
-                        },
-                        {
-                            path: 'file_03.txt',
-                            name: 'File watcher 3',
-                            room: 'watcher_03'
-                        },
-                        {
-                            path: 'file_04.txt',
-                            name: 'File watcher 4',
-                            room: 'watcher_04'
-                        }
-                    ]
+                    files: []
                 }
             };
         },
@@ -55,9 +34,7 @@ module.exports = function watcherHook(sails) {
             }
 
             // Normalize files to watch, basically just add some base path to each files
-            var filesToWatch = _.map(sails.config.watcherHook.files, function iterator(file) {
-                return path.resolve(sails.config.appPath, 'data') + '/' + file.path;
-            });
+            var filesToWatch = _.pluck(sails.config.watcherHook.files, 'path');
 
             // Watch all specified files
             var watcher = chokidar.watch(filesToWatch, {
@@ -84,12 +61,16 @@ module.exports = function watcherHook(sails) {
 
                         // Determine file configuration
                         var fileConfig = _.find(sails.config.watcherHook.files, function iterator(_file) {
-                            return path.resolve(sails.config.appPath, 'data') + '/' + _file.path == file;
+                            return _file.path === file;
                         });
 
                         if (fileConfig) {
-                            // Blast socket event to all subscribers
-                            sails.sockets.blast(fileConfig.room, {data: data, stats: stats});
+                            // Emit socket event to all subscribers
+                            sails.sockets.emit(
+                                sails.sockets.subscribers(fileConfig.room),
+                                fileConfig.room,
+                                {data: data, stats: stats}
+                            );
                         } else {
                             sails.log.error('File configuration not found for file - ' + file);
                         }

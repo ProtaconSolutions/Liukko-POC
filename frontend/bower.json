@@ -31,5 +31,12 @@
     "ng-prettyjson": "0.1.3"
   },
   "devDependencies": {},
-  "overrides": {}
+  "overrides": {
+    "ng-prettyjson": {
+      "main": [
+        "./src/ng-prettyjson.js",
+        "./src/ng-prettyjson.css"
+      ]
+    }
+  }
 }

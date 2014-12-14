@@ -16,7 +16,21 @@ module.exports = {
      * @param   {Response}  response    Response object
      */
     files: function files(request, response) {
-        response.ok(sails.config.watcherHook.files);
+        // Determine current active rooms
+        var currentRooms = sails.sockets.socketRooms(request.socket);
+
+        // Map configured files and set some default data to those
+        var files = _.map(_.clone(sails.config.watcherHook.files), function iterator(file) {
+            file.watcherActive = Boolean(_.find(currentRooms, function iterator(room) {
+                return room === file.room;
+            }))
+
+            file.data = '';
+
+            return file;
+        });
+
+        response.ok(files);
     },
     /**
      * Watch method to set client to join (listen) certain room (socket channel).
@@ -27,6 +41,8 @@ module.exports = {
     watch: function watch(request, response) {
         // Determine asked room
         var room = request.param('room');
+
+        console.log(JSON.stringify(sails.sockets.socketRooms(request.socket)));
 
         // Check that room is configured
         var found = _.find(sails.config.watcherHook.files, function iterator(file) {
@@ -67,6 +83,8 @@ module.exports = {
         if (found) {
             // Leave to specified room
             sails.sockets.leave(request.socket, room);
+
+            console.log(JSON.stringify(sails.sockets.socketRooms(request.socket)));
 
             response.ok({message: 'You have been un-subscribed successfully!'});
         } else {

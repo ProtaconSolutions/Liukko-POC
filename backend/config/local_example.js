@@ -1,5 +1,8 @@
 'use strict';
 
+var path = require('path');
+var sails = require('sails');
+
 /**
  * Local environment settings
  *
@@ -27,22 +30,22 @@ module.exports = {
     watcherHook: {
         files: [
             {
-                path: 'file_01.txt',
+                path: path.resolve(sails.config.appPath, 'data') + '/file_01.txt',
                 name: 'File watcher 1',
                 room: 'watcher_01'
             },
             {
-                path: 'file_02.txt',
+                path: path.resolve(sails.config.appPath, 'data') + '/file_02.txt',
                 name: 'File watcher 2',
                 room: 'watcher_02'
             },
             {
-                path: 'file_03.txt',
+                path: path.resolve(sails.config.appPath, 'data') + '/file_03.txt',
                 name: 'File watcher 3',
                 room: 'watcher_03'
             },
             {
-                path: 'file_04.txt',
+                path: path.resolve(sails.config.appPath, 'data') + '/file_04.txt',
                 name: 'File watcher 4',
                 room: 'watcher_04'
             }

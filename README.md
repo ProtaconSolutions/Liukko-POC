@@ -146,7 +146,8 @@ http://localhost:3000 url.
             <li>password: poc</li>
         </ul>
     </li>
-    <li>Open terminal and modify <code>backend/data/poc.txt</code>
+    <li>Start watcher for files you like</li>
+    <li>Open terminal and modify <code>backend/data/{watcherFile}</code>
         <ul>
             <li>You should see changes of that file on the browser</li>
         </ul>

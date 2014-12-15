@@ -30,12 +30,8 @@
                                                     .then(
                                                         function onSuccess(result) {
                                                             return result.data;
-                                                        },
-                                                        function onError(error) {
-                                                            console.log(error);
                                                         }
                                                     );
-
                                             }
                                         ]
                                     }

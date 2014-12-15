@@ -4,12 +4,12 @@
     angular.module('liukko-poc.watcher')
         .controller('WatcherController',
             [
-                '$scope', '$sailsSocket',
+                '$scope', '$sailsSocket', '$modal',
                 '_',
                 'BackendConfig', 'MessageService',
                 '_files',
                 function WatcherController(
-                    $scope, $sailsSocket,
+                    $scope, $sailsSocket, $modal,
                     _,
                     BackendConfig, MessageService,
                     _files
@@ -66,7 +66,26 @@
                      * @param   {{}}    file
                      */
                     $scope.updateFileContent = function updateFileContent(file) {
-                        MessageService.info('File ' + file.path + ' content update is not yet supported');
+                        var modalInstance = $modal.open({
+                            templateUrl: '/liukko-poc/watcher/partials/modal.html',
+                            controller: 'ModalController',
+                            size: 'lg',
+                            resolve: {
+                                _file: function resolve() {
+                                    return true;
+                                }
+                            }
+                        });
+
+                        modalInstance.result
+                            .then(
+                                function onSuccess() {
+                                    console.log('modal close');
+                                },
+                                function onDismiss() {
+                                    console.log('modal dismiss');
+                                }
+                            );
                     };
 
                     /**
@@ -84,11 +103,27 @@
                                 .subscribe(file.room, function modelEvent(message) {
                                     console.log('You just got a socket message!', message);
 
-                                    MessageService.success('File <strong>' + file.path + '</strong> content changed.');
-
                                     file.data = message;
                                 });
                         }
+                    };
+                }
+            ]
+        );
+
+    angular.module('liukko-poc.watcher')
+        .controller('ModalController',
+            [
+                '$scope', '$modalInstance',
+                function ModalController(
+                    $scope, $modalInstance
+                ) {
+                    $scope.save = function save() {
+                        $modalInstance.close();
+                    };
+
+                    $scope.cancel = function cancel() {
+                        $modalInstance.dismiss();
                     };
                 }
             ]

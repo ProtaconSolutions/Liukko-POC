@@ -44,32 +44,40 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-3"
+    <div class="col-sm-3 watcher-column"
         data-ng-repeat="file in files"
+        data-ng-init="file.data = {contents: '', stats: ''}"
     >
         <h4>{{file.name}}</h4>
-        <h5>{{file.path}}</h5>
+        <h5 class="text-muted">{{file.path}}</h5>
+        <p>
+            {{file.description}}
+        </p>
 
-        <pre class="file-content" pretty-json="file.data"></pre>
+        <pre class="file-content" pretty-json="file.data.contents"></pre>
+        <pre class="file-content" pretty-json="file.data.stats"></pre>
 
-        <div class="btn-group">
-            <button class="btn btn-primary"
-                data-ng-disabled="file.watcherActive"
-                data-ng-click="watcherStart(file)"
-            >
-                Start watcher
-            </button>
-            <button class="btn btn-danger"
-                data-ng-disabled="!file.watcherActive"
-                data-ng-click="watcherStop(file)"
-            >
-                Stop watcher
-            </button>
-            <button class="btn btn-success"
-                data-ng-click="updateFileContent(file)"
-            >
-                Update content
-            </button>
+        <div class="text-center">
+            <div class="btn-group">
+                <button class="btn btn-primary"
+                    data-ng-disabled="file.watcherActive"
+                    data-ng-click="watcherStart(file)"
+                >
+                    Start watcher
+                </button>
+                <button class="btn btn-danger"
+                    data-ng-disabled="!file.watcherActive"
+                    data-ng-click="watcherStop(file)"
+                >
+                    Stop watcher
+                </button>
+                <button class="btn btn-success"
+                    data-ng-click="updateFileContent(file)"
+                    data-ng-disabled="!file.editable"
+                >
+                    Update content
+                </button>
+            </div>
         </div>
     </div>
 </div>

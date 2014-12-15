@@ -15,8 +15,16 @@ body {
   margin-bottom: 30px;
 }
 
+.text-small {
+  font-size: 60%;
+}
+
 header .navbar-nav {
   float: none;
+}
+
+pre {
+  outline: none;
 }
 
 footer {

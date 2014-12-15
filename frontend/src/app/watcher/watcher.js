@@ -26,12 +26,16 @@
                                             '$sailsSocket', 'BackendConfig',
                                             function resolve($sailsSocket, BackendConfig) {
                                                 return $sailsSocket
-                                                    .get(BackendConfig.url + '/watcher/files')
+                                                    .get(BackendConfig.url + '/file')
                                                     .then(
                                                         function onSuccess(result) {
                                                             return result.data;
+                                                        },
+                                                        function onError(error) {
+                                                            console.log(error);
                                                         }
                                                     );
+
                                             }
                                         ]
                                     }

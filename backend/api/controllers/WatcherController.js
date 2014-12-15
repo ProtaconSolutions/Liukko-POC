@@ -10,29 +10,6 @@ var _ = require('lodash');
  */
 module.exports = {
     /**
-     * Simple action to return all currently configured watcher files.
-     *
-     * @param   {Request}   request     Request object
-     * @param   {Response}  response    Response object
-     */
-    files: function files(request, response) {
-        // Determine current active rooms
-        var currentRooms = sails.sockets.socketRooms(request.socket);
-
-        // Map configured files and set some default data to those
-        var files = _.map(_.clone(sails.config.watcherHook.files), function iterator(file) {
-            file.watcherActive = Boolean(_.find(currentRooms, function iterator(room) {
-                return room === file.room;
-            }))
-
-            file.data = '';
-
-            return file;
-        });
-
-        response.ok(files);
-    },
-    /**
      * Watch method to set client to join (listen) certain room (socket channel).
      *
      * @param   {Request}   request     Request object
@@ -42,27 +19,26 @@ module.exports = {
         // Determine asked room
         var room = request.param('room');
 
-        console.log(JSON.stringify(sails.sockets.socketRooms(request.socket)));
+        // Fetch single file data from database
+        sails.models['file']
+            .findOne({room: room})
+            .exec(function exec(error, file) {
+                if (error) {
+                    response.negotiate(error);
+                } else if (!file) {
+                    var error = new Error();
 
-        // Check that room is configured
-        var found = _.find(sails.config.watcherHook.files, function iterator(file) {
-            return room === file.room;
-        });
+                    error.message = 'Specified file watcher not found';
+                    error.status = 404;
 
-        // Seems like we have valid room, so join to that room
-        if (found) {
-            // Join to specified room
-            sails.sockets.join(request.socket, room);
+                    response.negotiate(error);
+                } else {
+                    // Join to specified room
+                    sails.sockets.join(request.socket, room);
 
-            response.ok({message: 'You have been subscribed successfully!'});
-        } else {
-            var error = new Error();
-
-            error.message = 'Specified file watcher not found';
-            error.status = 404;
-
-            response.negotiate(error);
-        }
+                    response.ok({message: 'You have been subscribed successfully!'});
+                }
+            });
     },
     /**
      * Un-watch method to set client to leave certain room (socket channel).
@@ -74,26 +50,25 @@ module.exports = {
         // Determine asked room
         var room = request.param('room');
 
-        // Check that room is configured
-        var found = _.find(sails.config.watcherHook.files, function iterator(file) {
-            return room === file.room;
-        });
+        // Fetch single file data from database
+        sails.models['file']
+            .findOne({room: room})
+            .exec(function exec(error, file) {
+                if (error) {
+                    response.negotiate(error);
+                } else if (!file) {
+                    var error = new Error();
 
-        // Seems like we have valid room, so join to that room
-        if (found) {
-            // Leave to specified room
-            sails.sockets.leave(request.socket, room);
+                    error.message = 'Specified file watcher not found';
+                    error.status = 404;
 
-            console.log(JSON.stringify(sails.sockets.socketRooms(request.socket)));
+                    response.negotiate(error);
+                } else {
+                    // Join to specified room
+                    sails.sockets.leave(request.socket, room);
 
-            response.ok({message: 'You have been un-subscribed successfully!'});
-        } else {
-            var error = new Error();
-
-            error.message = 'Specified file watcher not found';
-            error.status = 404;
-
-            response.negotiate(error);
-        }
+                    response.ok({message: 'You have been un-subscribed successfully!'});
+                }
+            });
     }
 };

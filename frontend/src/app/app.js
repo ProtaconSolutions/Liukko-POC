@@ -8,6 +8,7 @@
         'ngStorage',
         'ngPrettyJson',
         'ui.router',
+        'ui.bootstrap',
         'toastr',
         'sails.io',
         'liukko-poc-templates',

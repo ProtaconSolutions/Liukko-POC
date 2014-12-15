@@ -115,3 +115,6 @@ npm-debug.log
 nbproject
 .idea
 .node_history
+
+# Ignore all watcher files
+data/*

@@ -35,7 +35,6 @@
                             // Set token to header + payload
                             config.data.token = token;
                             config.headers.authorization = 'Bearer ' + token;
-                            config.timeout = 5;
 
                             return config;
                         },

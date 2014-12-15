@@ -45,21 +45,21 @@
                         responseError: function responseErrorCallback(response) {
                             var message = '';
 
-                            if (response.data.error) {
-                                message = response.data.error;
-                            } else if (response.data.message) {
-                                message = response.data.message;
-                            } else {
-                                if (typeof response.data === 'string') {
+                            if (response.data) {
+                                if (response.data.error) {
+                                    message = response.data.error;
+                                } else if (response.data.message) {
+                                    message = response.data.message;
+                                } else if (typeof response.data === 'string') {
                                     message = response.data;
-                                } else if (response.statusText) {
-                                    message = response.statusText;
-                                } else {
-                                    message = $injector.get('HttpStatus').getStatusCodeText(response.status);
                                 }
-
-                                message = message + ' <span class="text-small">(HTTP status ' + response.status + ')</span>';
+                            } else if (response.statusText) {
+                                message = response.statusText;
+                            } else {
+                                message = $injector.get('HttpStatus').getStatusCodeText(response.status);
                             }
+
+                            message = message + ' <span class="text-small">(HTTP status ' + response.status + ')</span>';
 
                             if (message) {
                                 $injector.get('MessageService').error(message);

@@ -10,7 +10,8 @@
     "include-all": "0.1.6",
     "jsonwebtoken": "1.1.2",
     "lodash": "2.4.1",
-    "chokidar": "0.12.3"
+    "chokidar": "0.12.3",
+    "async": "0.9.0"
   },
   "devDependencies": {
     "supertest": "0.13.0",
@@ -31,8 +32,10 @@
   "bugs": {},
   "author": "Protacon Solutions",
   "license": "MIT",
-  "contributors": [{
-    "name": "Tarmo Leppänen",
-    "email": "tarmo.leppanen@protacon.com"
-  }]
+  "contributors": [
+    {
+      "name": "Tarmo Leppänen",
+      "email": "tarmo.leppanen@protacon.com"
+    }
+  ]
 }

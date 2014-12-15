@@ -29,5 +29,9 @@ module.exports.routes = {
 
     // Authentication routes
     '/logout': 'AuthController.logout',
-    'POST /login': 'AuthController.login'
+    'POST /login': 'AuthController.login',
+
+    // File read / write routes
+    'GET /file/:id/read': 'FileController.read',
+    'POST /file/:id/write': 'FileController.write'
 };

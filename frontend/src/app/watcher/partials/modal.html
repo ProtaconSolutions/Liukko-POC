@@ -5,18 +5,31 @@
         <span aria-hidden="true">&times;</span>
         <span class="sr-only">Close</span>
     </button>
-    <h4 class="modal-title">Change file contents</h4>
+    <h4 class="modal-title">Change file '{{file.name}}' contents</h4>
 </div>
 
 <div class="modal-body">
-    Show file data here
+    <form role="form">
+        <div class="form-group">
+            <label for="fileContent">File contents</label>
+            <textarea id="fileContent" class="form-control" rows="8"
+                data-ng-model="file.data"
+            ></textarea>
+        </div>
+    </form>
 </div>
 
 <div class="modal-footer">
     <button class="btn btn-primary"
-        data-ng-click="save()"
+        data-ng-click="save(false)"
     >
-        Save contents
+        Save
+    </button>
+
+    <button class="btn btn-primary"
+            data-ng-click="save(true)"
+            >
+        Save and close
     </button>
 
     <button class="btn btn-default pull-left"

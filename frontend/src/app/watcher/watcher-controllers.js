@@ -71,9 +71,18 @@
                             controller: 'ModalController',
                             size: 'lg',
                             resolve: {
-                                _file: function resolve() {
-                                    return true;
-                                }
+                                _file: [
+                                    '$sailsSocket', 'BackendConfig',
+                                    function resolve($sailsSocket, BackendConfig) {
+                                        return $sailsSocket
+                                            .get(BackendConfig.url + '/file/' + file.id + '/read')
+                                            .then(
+                                                function onSuccess(result) {
+                                                    return result.data;
+                                                }
+                                            );
+                                    }
+                                ]
                             }
                         });
 
@@ -114,12 +123,28 @@
     angular.module('liukko-poc.watcher')
         .controller('ModalController',
             [
-                '$scope', '$modalInstance',
+                '$scope', '$modalInstance', '$sailsSocket',
+                'BackendConfig', 'MessageService',
+                '_file',
                 function ModalController(
-                    $scope, $modalInstance
+                    $scope, $modalInstance, $sailsSocket,
+                    BackendConfig, MessageService,
+                    _file
                 ) {
-                    $scope.save = function save() {
-                        $modalInstance.close();
+                    $scope.file = _file;
+
+                    $scope.save = function save(close) {
+                        $sailsSocket
+                            .post(BackendConfig.url + '/file/' + $scope.file.id + '/write', $scope.file)
+                            .then(
+                                function onSuccess() {
+                                    MessageService.success('File \'' + $scope.file.name + '\' updated successfully.');
+
+                                    if (close) {
+                                        $modalInstance.close();
+                                    }
+                                }
+                            );
                     };
 
                     $scope.cancel = function cancel() {

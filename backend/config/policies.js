@@ -29,5 +29,10 @@ module.exports.policies = {
     // Watcher controller
     WatcherController: {
         '*': ['Authenticated', 'IsSocket']
+    },
+
+    // File controller
+    FileController: {
+        '*': ['Authenticated', 'IsSocket']
     }
 };
